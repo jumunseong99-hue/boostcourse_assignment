@@ -1,0 +1,1476 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/jumunseong99-hue/boostcourse_assignment/blob/main/5_2_%ED%8C%8C%EC%9D%B4%EC%8D%AC_EDA_%EA%B8%B0%EC%88%A0%ED%86%B5%EA%B3%84_input_ipynb%EC%9D%98_%EC%82%AC%EB%B3%B8.ipynb%20(%EC%A4%91%EA%B0%84%20%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%20%EC%98%A4%EB%A5%98)\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "MazdRdVvJFiB"
+      },
+      "source": [
+        "## 라이브러리 로드"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 2,
+      "metadata": {
+        "id": "DOPF9u1_JFiC"
+      },
+      "outputs": [],
+      "source": [
+        "# 데이터 분석을 위한 pandas 라이브러리를 불러옵니다.\n",
+        "# 데이터 시각화를 위한 seaborn 을 불러옵니다.\n",
+        "import pandas as pd\n",
+        "import seaborn as sns"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 3,
+      "metadata": {
+        "id": "57tRFctKJFiD",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "6051c6eb-0ff4-4f07-ee15-3a06b889a9ef"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "2.2.2\n",
+            "0.13.2\n"
+          ]
+        }
+      ],
+      "source": [
+        "print(pd.__version__)\n",
+        "print(sns.__version__)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "CAqlKVPcJFiD"
+      },
+      "outputs": [],
+      "source": [
+        "# 0.11.0 버전에서 변화가 많으니 이 버전 이상을 사용해 주세요.\n",
+        "# !pip install seaborn --upgrade"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "tPMjddypJFiD"
+      },
+      "source": [
+        "## 데이터셋 불러오기\n",
+        "<img src=\"https://pandas.pydata.org/docs/_images/02_io_readwrite.svg\">\n",
+        "\n",
+        "* seaborn 데이터셋 위치 : https://github.com/mwaskom/seaborn-data"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 5,
+      "metadata": {
+        "id": "mIzJSO8xJFiD",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "3942839a-6c79-40dc-acb6-736208ee5d18"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "(398, 9)"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 5
+        }
+      ],
+      "source": [
+        "df= sns.load_dataset('mpg')\n",
+        "df.shape\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "hArOP4j2JFiD"
+      },
+      "source": [
+        "## 데이터셋 일부만 가져오기"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 6,
+      "metadata": {
+        "id": "cjVqMmv6JFiE",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 98
+        },
+        "outputId": "732820f3-3746-4389-fb6e-2ed308d3a684"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "    mpg  cylinders  displacement  horsepower  weight  acceleration  \\\n",
+              "0  18.0          8         307.0       130.0    3504          12.0   \n",
+              "\n",
+              "   model_year origin                       name  \n",
+              "0          70    usa  chevrolet chevelle malibu  "
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-52735700-0191-453a-b692-ce4eb6565e47\" class=\"colab-df-container\">\n",
+              "    <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>mpg</th>\n",
+              "      <th>cylinders</th>\n",
+              "      <th>displacement</th>\n",
+              "      <th>horsepower</th>\n",
+              "      <th>weight</th>\n",
+              "      <th>acceleration</th>\n",
+              "      <th>model_year</th>\n",
+              "      <th>origin</th>\n",
+              "      <th>name</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>18.0</td>\n",
+              "      <td>8</td>\n",
+              "      <td>307.0</td>\n",
+              "      <td>130.0</td>\n",
+              "      <td>3504</td>\n",
+              "      <td>12.0</td>\n",
+              "      <td>70</td>\n",
+              "      <td>usa</td>\n",
+              "      <td>chevrolet chevelle malibu</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>\n",
+              "    <div class=\"colab-df-buttons\">\n",
+              "\n",
+              "  <div class=\"colab-df-container\">\n",
+              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-52735700-0191-453a-b692-ce4eb6565e47')\"\n",
+              "            title=\"Convert this dataframe to an interactive table.\"\n",
+              "            style=\"display:none;\">\n",
+              "\n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\">\n",
+              "    <path d=\"M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z\"/>\n",
+              "  </svg>\n",
+              "    </button>\n",
+              "\n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-buttons div {\n",
+              "      margin-bottom: 4px;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "    <script>\n",
+              "      const buttonEl =\n",
+              "        document.querySelector('#df-52735700-0191-453a-b692-ce4eb6565e47 button.colab-df-convert');\n",
+              "      buttonEl.style.display =\n",
+              "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "      async function convertToInteractive(key) {\n",
+              "        const element = document.querySelector('#df-52735700-0191-453a-b692-ce4eb6565e47');\n",
+              "        const dataTable =\n",
+              "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                    [key], {});\n",
+              "        if (!dataTable) return;\n",
+              "\n",
+              "        const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "          '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "          + ' to learn more about interactive tables.';\n",
+              "        element.innerHTML = '';\n",
+              "        dataTable['output_type'] = 'display_data';\n",
+              "        await google.colab.output.renderOutput(dataTable, element);\n",
+              "        const docLink = document.createElement('div');\n",
+              "        docLink.innerHTML = docLinkHtml;\n",
+              "        element.appendChild(docLink);\n",
+              "      }\n",
+              "    </script>\n",
+              "  </div>\n",
+              "\n",
+              "\n",
+              "    </div>\n",
+              "  </div>\n"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "dataframe",
+              "variable_name": "df",
+              "summary": "{\n  \"name\": \"df\",\n  \"rows\": 398,\n  \"fields\": [\n    {\n      \"column\": \"mpg\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 7.815984312565782,\n        \"min\": 9.0,\n        \"max\": 46.6,\n        \"num_unique_values\": 129,\n        \"samples\": [\n          17.7,\n          30.5,\n          30.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"cylinders\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1,\n        \"min\": 3,\n        \"max\": 8,\n        \"num_unique_values\": 5,\n        \"samples\": [\n          4,\n          5,\n          6\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"displacement\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 104.26983817119581,\n        \"min\": 68.0,\n        \"max\": 455.0,\n        \"num_unique_values\": 82,\n        \"samples\": [\n          122.0,\n          307.0,\n          360.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"horsepower\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 38.49115993282855,\n        \"min\": 46.0,\n        \"max\": 230.0,\n        \"num_unique_values\": 93,\n        \"samples\": [\n          92.0,\n          100.0,\n          52.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"weight\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 846,\n        \"min\": 1613,\n        \"max\": 5140,\n        \"num_unique_values\": 351,\n        \"samples\": [\n          3730,\n          1995,\n          2215\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"acceleration\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 2.7576889298126757,\n        \"min\": 8.0,\n        \"max\": 24.8,\n        \"num_unique_values\": 95,\n        \"samples\": [\n          14.7,\n          18.0,\n          14.3\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"model_year\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 3,\n        \"min\": 70,\n        \"max\": 82,\n        \"num_unique_values\": 13,\n        \"samples\": [\n          81,\n          79,\n          70\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"origin\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 3,\n        \"samples\": [\n          \"usa\",\n          \"japan\",\n          \"europe\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"name\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 305,\n        \"samples\": [\n          \"mazda rx-4\",\n          \"ford f108\",\n          \"buick century luxus (sw)\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "metadata": {},
+          "execution_count": 6
+        }
+      ],
+      "source": [
+        "# head\n",
+        "df.head(1)\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 7,
+      "metadata": {
+        "id": "l-6uwQRfJFiE",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 81
+        },
+        "outputId": "4ec79766-784d-49f9-8344-0b71f8a9f525"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "      mpg  cylinders  displacement  horsepower  weight  acceleration  \\\n",
+              "397  31.0          4         119.0        82.0    2720          19.4   \n",
+              "\n",
+              "     model_year origin        name  \n",
+              "397          82    usa  chevy s-10  "
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-fe90cfeb-050a-46f9-bd6e-28daf0c80307\" class=\"colab-df-container\">\n",
+              "    <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>mpg</th>\n",
+              "      <th>cylinders</th>\n",
+              "      <th>displacement</th>\n",
+              "      <th>horsepower</th>\n",
+              "      <th>weight</th>\n",
+              "      <th>acceleration</th>\n",
+              "      <th>model_year</th>\n",
+              "      <th>origin</th>\n",
+              "      <th>name</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>397</th>\n",
+              "      <td>31.0</td>\n",
+              "      <td>4</td>\n",
+              "      <td>119.0</td>\n",
+              "      <td>82.0</td>\n",
+              "      <td>2720</td>\n",
+              "      <td>19.4</td>\n",
+              "      <td>82</td>\n",
+              "      <td>usa</td>\n",
+              "      <td>chevy s-10</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>\n",
+              "    <div class=\"colab-df-buttons\">\n",
+              "\n",
+              "  <div class=\"colab-df-container\">\n",
+              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-fe90cfeb-050a-46f9-bd6e-28daf0c80307')\"\n",
+              "            title=\"Convert this dataframe to an interactive table.\"\n",
+              "            style=\"display:none;\">\n",
+              "\n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\">\n",
+              "    <path d=\"M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z\"/>\n",
+              "  </svg>\n",
+              "    </button>\n",
+              "\n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-buttons div {\n",
+              "      margin-bottom: 4px;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "    <script>\n",
+              "      const buttonEl =\n",
+              "        document.querySelector('#df-fe90cfeb-050a-46f9-bd6e-28daf0c80307 button.colab-df-convert');\n",
+              "      buttonEl.style.display =\n",
+              "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "      async function convertToInteractive(key) {\n",
+              "        const element = document.querySelector('#df-fe90cfeb-050a-46f9-bd6e-28daf0c80307');\n",
+              "        const dataTable =\n",
+              "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                    [key], {});\n",
+              "        if (!dataTable) return;\n",
+              "\n",
+              "        const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "          '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "          + ' to learn more about interactive tables.';\n",
+              "        element.innerHTML = '';\n",
+              "        dataTable['output_type'] = 'display_data';\n",
+              "        await google.colab.output.renderOutput(dataTable, element);\n",
+              "        const docLink = document.createElement('div');\n",
+              "        docLink.innerHTML = docLinkHtml;\n",
+              "        element.appendChild(docLink);\n",
+              "      }\n",
+              "    </script>\n",
+              "  </div>\n",
+              "\n",
+              "\n",
+              "    </div>\n",
+              "  </div>\n"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "dataframe",
+              "summary": "{\n  \"name\": \"df\",\n  \"rows\": 1,\n  \"fields\": [\n    {\n      \"column\": \"mpg\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": null,\n        \"min\": 31.0,\n        \"max\": 31.0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          31.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"cylinders\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": null,\n        \"min\": 4,\n        \"max\": 4,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          4\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"displacement\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": null,\n        \"min\": 119.0,\n        \"max\": 119.0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          119.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"horsepower\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": null,\n        \"min\": 82.0,\n        \"max\": 82.0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          82.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"weight\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": null,\n        \"min\": 2720,\n        \"max\": 2720,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          2720\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"acceleration\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": null,\n        \"min\": 19.4,\n        \"max\": 19.4,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          19.4\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"model_year\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": null,\n        \"min\": 82,\n        \"max\": 82,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          82\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"origin\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 1,\n        \"samples\": [\n          \"usa\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"name\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 1,\n        \"samples\": [\n          \"chevy s-10\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "metadata": {},
+          "execution_count": 7
+        }
+      ],
+      "source": [
+        "# tail\n",
+        "df.tail(1)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 8,
+      "metadata": {
+        "id": "ofsFTXJYJFiE",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 81
+        },
+        "outputId": "1f52f5d5-c418-407b-c2d9-e1fc8429a191"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "      mpg  cylinders  displacement  horsepower  weight  acceleration  \\\n",
+              "183  25.0          4         116.0        81.0    2220          16.9   \n",
+              "\n",
+              "     model_year  origin       name  \n",
+              "183          76  europe  opel 1900  "
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-b0d4095e-8f05-4522-8cf9-af953d58b4b6\" class=\"colab-df-container\">\n",
+              "    <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>mpg</th>\n",
+              "      <th>cylinders</th>\n",
+              "      <th>displacement</th>\n",
+              "      <th>horsepower</th>\n",
+              "      <th>weight</th>\n",
+              "      <th>acceleration</th>\n",
+              "      <th>model_year</th>\n",
+              "      <th>origin</th>\n",
+              "      <th>name</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>183</th>\n",
+              "      <td>25.0</td>\n",
+              "      <td>4</td>\n",
+              "      <td>116.0</td>\n",
+              "      <td>81.0</td>\n",
+              "      <td>2220</td>\n",
+              "      <td>16.9</td>\n",
+              "      <td>76</td>\n",
+              "      <td>europe</td>\n",
+              "      <td>opel 1900</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>\n",
+              "    <div class=\"colab-df-buttons\">\n",
+              "\n",
+              "  <div class=\"colab-df-container\">\n",
+              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-b0d4095e-8f05-4522-8cf9-af953d58b4b6')\"\n",
+              "            title=\"Convert this dataframe to an interactive table.\"\n",
+              "            style=\"display:none;\">\n",
+              "\n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\">\n",
+              "    <path d=\"M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z\"/>\n",
+              "  </svg>\n",
+              "    </button>\n",
+              "\n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-buttons div {\n",
+              "      margin-bottom: 4px;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "    <script>\n",
+              "      const buttonEl =\n",
+              "        document.querySelector('#df-b0d4095e-8f05-4522-8cf9-af953d58b4b6 button.colab-df-convert');\n",
+              "      buttonEl.style.display =\n",
+              "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "      async function convertToInteractive(key) {\n",
+              "        const element = document.querySelector('#df-b0d4095e-8f05-4522-8cf9-af953d58b4b6');\n",
+              "        const dataTable =\n",
+              "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                    [key], {});\n",
+              "        if (!dataTable) return;\n",
+              "\n",
+              "        const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "          '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "          + ' to learn more about interactive tables.';\n",
+              "        element.innerHTML = '';\n",
+              "        dataTable['output_type'] = 'display_data';\n",
+              "        await google.colab.output.renderOutput(dataTable, element);\n",
+              "        const docLink = document.createElement('div');\n",
+              "        docLink.innerHTML = docLinkHtml;\n",
+              "        element.appendChild(docLink);\n",
+              "      }\n",
+              "    </script>\n",
+              "  </div>\n",
+              "\n",
+              "\n",
+              "    </div>\n",
+              "  </div>\n"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "dataframe",
+              "summary": "{\n  \"name\": \"df\",\n  \"rows\": 1,\n  \"fields\": [\n    {\n      \"column\": \"mpg\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": null,\n        \"min\": 25.0,\n        \"max\": 25.0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          25.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"cylinders\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": null,\n        \"min\": 4,\n        \"max\": 4,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          4\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"displacement\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": null,\n        \"min\": 116.0,\n        \"max\": 116.0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          116.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"horsepower\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": null,\n        \"min\": 81.0,\n        \"max\": 81.0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          81.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"weight\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": null,\n        \"min\": 2220,\n        \"max\": 2220,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          2220\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"acceleration\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": null,\n        \"min\": 16.9,\n        \"max\": 16.9,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          16.9\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"model_year\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": null,\n        \"min\": 76,\n        \"max\": 76,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          76\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"origin\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 1,\n        \"samples\": [\n          \"europe\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"name\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 1,\n        \"samples\": [\n          \"opel 1900\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "metadata": {},
+          "execution_count": 8
+        }
+      ],
+      "source": [
+        "# sample\n",
+        "df.sample(1)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "G-5SBvX_JFiE"
+      },
+      "source": [
+        "## 매번 봐야 하는 기술통계값 코드 한 줄로 보기\n",
+        "### Pandas Profiling\n",
+        "* [pandas-profiling/pandas-profiling: Create HTML profiling reports from pandas DataFrame objects](https://github.com/pandas-profiling/pandas-profiling)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 9,
+      "metadata": {
+        "id": "kacTYQtrJFiE",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "844c0b23-02a4-45ff-a403-0f9bcd0ca547"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Collecting pandas_profiling\n",
+            "  Downloading pandas_profiling-3.2.0-py2.py3-none-any.whl.metadata (21 kB)\n",
+            "Collecting joblib~=1.1.0 (from pandas_profiling)\n",
+            "  Downloading joblib-1.1.1-py2.py3-none-any.whl.metadata (5.2 kB)\n",
+            "Requirement already satisfied: scipy>=1.4.1 in /usr/local/lib/python3.12/dist-packages (from pandas_profiling) (1.16.1)\n",
+            "Requirement already satisfied: pandas!=1.0.0,!=1.0.1,!=1.0.2,!=1.1.0,>=0.25.3 in /usr/local/lib/python3.12/dist-packages (from pandas_profiling) (2.2.2)\n",
+            "Requirement already satisfied: matplotlib>=3.2.0 in /usr/local/lib/python3.12/dist-packages (from pandas_profiling) (3.10.0)\n",
+            "Requirement already satisfied: pydantic>=1.8.1 in /usr/local/lib/python3.12/dist-packages (from pandas_profiling) (2.11.7)\n",
+            "Requirement already satisfied: PyYAML>=5.0.0 in /usr/local/lib/python3.12/dist-packages (from pandas_profiling) (6.0.2)\n",
+            "Requirement already satisfied: jinja2>=2.11.1 in /usr/local/lib/python3.12/dist-packages (from pandas_profiling) (3.1.6)\n",
+            "Collecting markupsafe~=2.1.1 (from pandas_profiling)\n",
+            "  Downloading MarkupSafe-2.1.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.0 kB)\n",
+            "Collecting visions==0.7.4 (from visions[type_image_path]==0.7.4->pandas_profiling)\n",
+            "  Downloading visions-0.7.4-py3-none-any.whl.metadata (5.9 kB)\n",
+            "Requirement already satisfied: numpy>=1.16.0 in /usr/local/lib/python3.12/dist-packages (from pandas_profiling) (2.0.2)\n",
+            "Collecting htmlmin>=0.1.12 (from pandas_profiling)\n",
+            "  Downloading htmlmin-0.1.12.tar.gz (19 kB)\n",
+            "  Preparing metadata (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "Requirement already satisfied: missingno>=0.4.2 in /usr/local/lib/python3.12/dist-packages (from pandas_profiling) (0.5.2)\n",
+            "Collecting phik>=0.11.1 (from pandas_profiling)\n",
+            "  Downloading phik-0.12.5-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (5.6 kB)\n",
+            "Collecting tangled-up-in-unicode==0.2.0 (from pandas_profiling)\n",
+            "  Downloading tangled_up_in_unicode-0.2.0-py3-none-any.whl.metadata (4.8 kB)\n",
+            "Requirement already satisfied: requests>=2.24.0 in /usr/local/lib/python3.12/dist-packages (from pandas_profiling) (2.32.4)\n",
+            "Requirement already satisfied: tqdm>=4.48.2 in /usr/local/lib/python3.12/dist-packages (from pandas_profiling) (4.67.1)\n",
+            "Requirement already satisfied: seaborn>=0.10.1 in /usr/local/lib/python3.12/dist-packages (from pandas_profiling) (0.13.2)\n",
+            "Collecting multimethod>=1.4 (from pandas_profiling)\n",
+            "  Downloading multimethod-2.0-py3-none-any.whl.metadata (9.2 kB)\n",
+            "Requirement already satisfied: attrs>=19.3.0 in /usr/local/lib/python3.12/dist-packages (from visions==0.7.4->visions[type_image_path]==0.7.4->pandas_profiling) (25.3.0)\n",
+            "Requirement already satisfied: networkx>=2.4 in /usr/local/lib/python3.12/dist-packages (from visions==0.7.4->visions[type_image_path]==0.7.4->pandas_profiling) (3.5)\n",
+            "Collecting imagehash (from visions[type_image_path]==0.7.4->pandas_profiling)\n",
+            "  Downloading ImageHash-4.3.2-py2.py3-none-any.whl.metadata (8.4 kB)\n",
+            "Requirement already satisfied: Pillow in /usr/local/lib/python3.12/dist-packages (from visions[type_image_path]==0.7.4->pandas_profiling) (11.3.0)\n",
+            "Requirement already satisfied: contourpy>=1.0.1 in /usr/local/lib/python3.12/dist-packages (from matplotlib>=3.2.0->pandas_profiling) (1.3.3)\n",
+            "Requirement already satisfied: cycler>=0.10 in /usr/local/lib/python3.12/dist-packages (from matplotlib>=3.2.0->pandas_profiling) (0.12.1)\n",
+            "Requirement already satisfied: fonttools>=4.22.0 in /usr/local/lib/python3.12/dist-packages (from matplotlib>=3.2.0->pandas_profiling) (4.59.2)\n",
+            "Requirement already satisfied: kiwisolver>=1.3.1 in /usr/local/lib/python3.12/dist-packages (from matplotlib>=3.2.0->pandas_profiling) (1.4.9)\n",
+            "Requirement already satisfied: packaging>=20.0 in /usr/local/lib/python3.12/dist-packages (from matplotlib>=3.2.0->pandas_profiling) (25.0)\n",
+            "Requirement already satisfied: pyparsing>=2.3.1 in /usr/local/lib/python3.12/dist-packages (from matplotlib>=3.2.0->pandas_profiling) (3.2.3)\n",
+            "Requirement already satisfied: python-dateutil>=2.7 in /usr/local/lib/python3.12/dist-packages (from matplotlib>=3.2.0->pandas_profiling) (2.9.0.post0)\n",
+            "Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.12/dist-packages (from pandas!=1.0.0,!=1.0.1,!=1.0.2,!=1.1.0,>=0.25.3->pandas_profiling) (2025.2)\n",
+            "Requirement already satisfied: tzdata>=2022.7 in /usr/local/lib/python3.12/dist-packages (from pandas!=1.0.0,!=1.0.1,!=1.0.2,!=1.1.0,>=0.25.3->pandas_profiling) (2025.2)\n",
+            "Requirement already satisfied: annotated-types>=0.6.0 in /usr/local/lib/python3.12/dist-packages (from pydantic>=1.8.1->pandas_profiling) (0.7.0)\n",
+            "Requirement already satisfied: pydantic-core==2.33.2 in /usr/local/lib/python3.12/dist-packages (from pydantic>=1.8.1->pandas_profiling) (2.33.2)\n",
+            "Requirement already satisfied: typing-extensions>=4.12.2 in /usr/local/lib/python3.12/dist-packages (from pydantic>=1.8.1->pandas_profiling) (4.15.0)\n",
+            "Requirement already satisfied: typing-inspection>=0.4.0 in /usr/local/lib/python3.12/dist-packages (from pydantic>=1.8.1->pandas_profiling) (0.4.1)\n",
+            "Requirement already satisfied: charset_normalizer<4,>=2 in /usr/local/lib/python3.12/dist-packages (from requests>=2.24.0->pandas_profiling) (3.4.3)\n",
+            "Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.12/dist-packages (from requests>=2.24.0->pandas_profiling) (3.10)\n",
+            "Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.12/dist-packages (from requests>=2.24.0->pandas_profiling) (2.5.0)\n",
+            "Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.12/dist-packages (from requests>=2.24.0->pandas_profiling) (2025.8.3)\n",
+            "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.12/dist-packages (from python-dateutil>=2.7->matplotlib>=3.2.0->pandas_profiling) (1.17.0)\n",
+            "Requirement already satisfied: PyWavelets in /usr/local/lib/python3.12/dist-packages (from imagehash->visions[type_image_path]==0.7.4->pandas_profiling) (1.9.0)\n",
+            "Downloading pandas_profiling-3.2.0-py2.py3-none-any.whl (262 kB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m262.6/262.6 kB\u001b[0m \u001b[31m18.0 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading tangled_up_in_unicode-0.2.0-py3-none-any.whl (4.7 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m4.7/4.7 MB\u001b[0m \u001b[31m99.5 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading visions-0.7.4-py3-none-any.whl (102 kB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m102.4/102.4 kB\u001b[0m \u001b[31m7.8 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading joblib-1.1.1-py2.py3-none-any.whl (309 kB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m309.8/309.8 kB\u001b[0m \u001b[31m21.8 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading MarkupSafe-2.1.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (28 kB)\n",
+            "Downloading multimethod-2.0-py3-none-any.whl (9.8 kB)\n",
+            "Downloading phik-0.12.5-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (679 kB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m679.7/679.7 kB\u001b[0m \u001b[31m45.0 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading ImageHash-4.3.2-py2.py3-none-any.whl (296 kB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m296.7/296.7 kB\u001b[0m \u001b[31m23.1 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hBuilding wheels for collected packages: htmlmin\n",
+            "  Building wheel for htmlmin (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "  Created wheel for htmlmin: filename=htmlmin-0.1.12-py3-none-any.whl size=27081 sha256=5a8fee5b2a37871a87e491b34b039a1501685508c1f1c47dce8f615ba42b4aec\n",
+            "  Stored in directory: /root/.cache/pip/wheels/5f/d4/d7/4189b07b5902ee9f3ce0dbb14909fbe8037c39d6c63ffd49c9\n",
+            "Successfully built htmlmin\n",
+            "Installing collected packages: htmlmin, tangled-up-in-unicode, multimethod, markupsafe, joblib, imagehash, visions, phik, pandas_profiling\n",
+            "  Attempting uninstall: markupsafe\n",
+            "    Found existing installation: MarkupSafe 3.0.2\n",
+            "    Uninstalling MarkupSafe-3.0.2:\n",
+            "      Successfully uninstalled MarkupSafe-3.0.2\n",
+            "  Attempting uninstall: joblib\n",
+            "    Found existing installation: joblib 1.5.2\n",
+            "    Uninstalling joblib-1.5.2:\n",
+            "      Successfully uninstalled joblib-1.5.2\n",
+            "\u001b[31mERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n",
+            "scikit-learn 1.6.1 requires joblib>=1.2.0, but you have joblib 1.1.1 which is incompatible.\n",
+            "imbalanced-learn 0.14.0 requires joblib<2,>=1.2.0, but you have joblib 1.1.1 which is incompatible.\u001b[0m\u001b[31m\n",
+            "\u001b[0mSuccessfully installed htmlmin-0.1.12 imagehash-4.3.2 joblib-1.1.1 markupsafe-2.1.5 multimethod-2.0 pandas_profiling-3.2.0 phik-0.12.5 tangled-up-in-unicode-0.2.0 visions-0.7.4\n"
+          ]
+        }
+      ],
+      "source": [
+        "# 아래 명령어로 설치합니다.\n",
+        "!pip install pandas_profiling --upgrade"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "profile"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 146
+        },
+        "id": "TAp_Xz7-MiCl",
+        "outputId": "f94eba3b-ddcf-4b44-9ce5-a49fc971e71e"
+      },
+      "execution_count": 11,
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "NameError",
+          "evalue": "name 'profile' is not defined",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+            "\u001b[0;32m/tmp/ipython-input-4045876713.py\u001b[0m in \u001b[0;36m<cell line: 0>\u001b[0;34m()\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mprofile\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+            "\u001b[0;31mNameError\u001b[0m: name 'profile' is not defined"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 10,
+      "metadata": {
+        "id": "yKLI4fSmJFiE",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 315
+        },
+        "outputId": "21e41fdd-25db-401c-f49d-212168792a46"
+      },
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "AttributeError",
+          "evalue": "module 'numba' has no attribute 'generated_jit'",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mAttributeError\u001b[0m                            Traceback (most recent call last)",
+            "\u001b[0;32m/tmp/ipython-input-870772761.py\u001b[0m in \u001b[0;36m<cell line: 0>\u001b[0;34m()\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0;32mfrom\u001b[0m \u001b[0mpandas_profiling\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mProfileReport\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      2\u001b[0m \u001b[0mprofile\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mProfileReport\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdf\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mtitle\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m\"Pandas Profiling Report\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas_profiling/__init__.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      4\u001b[0m \"\"\"\n\u001b[1;32m      5\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 6\u001b[0;31m \u001b[0;32mfrom\u001b[0m \u001b[0mpandas_profiling\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mcontroller\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mpandas_decorator\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      7\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mpandas_profiling\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mprofile_report\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mProfileReport\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      8\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mpandas_profiling\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mversion\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0m__version__\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas_profiling/controller/pandas_decorator.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      2\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mpandas\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mDataFrame\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      3\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 4\u001b[0;31m \u001b[0;32mfrom\u001b[0m \u001b[0mpandas_profiling\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mprofile_report\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mProfileReport\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      5\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      6\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas_profiling/profile_report.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      9\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0myaml\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     10\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mtqdm\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mauto\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mtqdm\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 11\u001b[0;31m \u001b[0;32mfrom\u001b[0m \u001b[0mvisions\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mVisionsTypeset\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     12\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     13\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mpandas_profiling\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mconfig\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mConfig\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mSettings\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/visions/__init__.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      2\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      3\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mvisions\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mtypes\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mtypesets\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mutils\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 4\u001b[0;31m \u001b[0;32mfrom\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mbackends\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0;34m*\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      5\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdeclarative\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mcreate_type\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      6\u001b[0m from visions.functional import (\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/visions/backends/__init__.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      7\u001b[0m     \u001b[0;32mimport\u001b[0m \u001b[0mpandas\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mpd\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      8\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 9\u001b[0;31m     \u001b[0;32mimport\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mbackends\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpandas\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     10\u001b[0m     \u001b[0;32mfrom\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mbackends\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpandas\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtest_utils\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mpandas_version\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     11\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/visions/backends/pandas/__init__.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mbackends\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpandas\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtraversal\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 2\u001b[0;31m \u001b[0;32mimport\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mbackends\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpandas\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtypes\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/visions/backends/pandas/types/__init__.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mbackends\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpandas\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtypes\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mboolean\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      2\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mbackends\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpandas\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtypes\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mcategorical\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 3\u001b[0;31m \u001b[0;32mimport\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mbackends\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpandas\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtypes\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mcomplex\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      4\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mbackends\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpandas\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtypes\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mcount\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mbackends\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpandas\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtypes\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdate\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/visions/backends/pandas/types/complex.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mbackends\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpandas\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mseries_utils\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mseries_not_empty\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mseries_not_sparse\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      6\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mbackends\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpandas\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtypes\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfloat\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mstring_is_float\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 7\u001b[0;31m \u001b[0;32mfrom\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mbackends\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mshared\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mparallelization_engines\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mpandas_apply\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      8\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtypes\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mcomplex\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mComplex\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      9\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mvisions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtypes\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mstring\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mString\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/visions/backends/shared/__init__.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0;32mfrom\u001b[0m \u001b[0;34m.\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mnan_handling\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mparallelization_engines\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mutilities\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/visions/backends/shared/nan_handling.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m     32\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0mhas_numba\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     33\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 34\u001b[0;31m     \u001b[0;34m@\u001b[0m\u001b[0mnb\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mgenerated_jit\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mnopython\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;32mTrue\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     35\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0mis_missing\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mx\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     36\u001b[0m         \"\"\"\n",
+            "\u001b[0;31mAttributeError\u001b[0m: module 'numba' has no attribute 'generated_jit'"
+          ]
+        }
+      ],
+      "source": [
+        "from pandas_profiling import ProfileReport\n",
+        "profile = ProfileReport(df, title=\"Pandas Profiling Report\")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "fY4CSC10JFiE"
+      },
+      "outputs": [],
+      "source": [
+        "# 주피터 노트북이 있는 위치에 html파일이 생성됩니다.\n",
+        "profile.to_file(\"pandas_profile_report.html\")"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "H32zk3QUJFiF"
+      },
+      "source": [
+        "### sweetviz\n",
+        "* [sweetviz · PyPI](https://pypi.org/project/sweetviz/)\n",
+        "<img src=\"https://warehouse-camo.ingress.cmh1.psfhosted.org/210c4eb7317c8b0d2e7d0784b1a9697c096050ef/687474703a2f2f636f6f6c74696d696e672e636f6d2f53562f4c61796f75742d416e696d332e676966\">"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 12,
+      "metadata": {
+        "id": "KhQxJJYbJFiF",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "e672c76a-fe45-414d-9c5e-f2fcfbf0ac60"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Collecting sweetviz\n",
+            "  Downloading sweetviz-2.3.1-py3-none-any.whl.metadata (24 kB)\n",
+            "Requirement already satisfied: pandas!=1.0.0,!=1.0.1,!=1.0.2,>=0.25.3 in /usr/local/lib/python3.12/dist-packages (from sweetviz) (2.2.2)\n",
+            "Requirement already satisfied: numpy>=1.16.0 in /usr/local/lib/python3.12/dist-packages (from sweetviz) (2.0.2)\n",
+            "Requirement already satisfied: matplotlib>=3.1.3 in /usr/local/lib/python3.12/dist-packages (from sweetviz) (3.10.0)\n",
+            "Requirement already satisfied: tqdm>=4.43.0 in /usr/local/lib/python3.12/dist-packages (from sweetviz) (4.67.1)\n",
+            "Requirement already satisfied: scipy>=1.3.2 in /usr/local/lib/python3.12/dist-packages (from sweetviz) (1.16.1)\n",
+            "Requirement already satisfied: jinja2>=2.11.1 in /usr/local/lib/python3.12/dist-packages (from sweetviz) (3.1.6)\n",
+            "Requirement already satisfied: importlib-resources>=1.2.0 in /usr/local/lib/python3.12/dist-packages (from sweetviz) (6.5.2)\n",
+            "Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.12/dist-packages (from jinja2>=2.11.1->sweetviz) (2.1.5)\n",
+            "Requirement already satisfied: contourpy>=1.0.1 in /usr/local/lib/python3.12/dist-packages (from matplotlib>=3.1.3->sweetviz) (1.3.3)\n",
+            "Requirement already satisfied: cycler>=0.10 in /usr/local/lib/python3.12/dist-packages (from matplotlib>=3.1.3->sweetviz) (0.12.1)\n",
+            "Requirement already satisfied: fonttools>=4.22.0 in /usr/local/lib/python3.12/dist-packages (from matplotlib>=3.1.3->sweetviz) (4.59.2)\n",
+            "Requirement already satisfied: kiwisolver>=1.3.1 in /usr/local/lib/python3.12/dist-packages (from matplotlib>=3.1.3->sweetviz) (1.4.9)\n",
+            "Requirement already satisfied: packaging>=20.0 in /usr/local/lib/python3.12/dist-packages (from matplotlib>=3.1.3->sweetviz) (25.0)\n",
+            "Requirement already satisfied: pillow>=8 in /usr/local/lib/python3.12/dist-packages (from matplotlib>=3.1.3->sweetviz) (11.3.0)\n",
+            "Requirement already satisfied: pyparsing>=2.3.1 in /usr/local/lib/python3.12/dist-packages (from matplotlib>=3.1.3->sweetviz) (3.2.3)\n",
+            "Requirement already satisfied: python-dateutil>=2.7 in /usr/local/lib/python3.12/dist-packages (from matplotlib>=3.1.3->sweetviz) (2.9.0.post0)\n",
+            "Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.12/dist-packages (from pandas!=1.0.0,!=1.0.1,!=1.0.2,>=0.25.3->sweetviz) (2025.2)\n",
+            "Requirement already satisfied: tzdata>=2022.7 in /usr/local/lib/python3.12/dist-packages (from pandas!=1.0.0,!=1.0.1,!=1.0.2,>=0.25.3->sweetviz) (2025.2)\n",
+            "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.12/dist-packages (from python-dateutil>=2.7->matplotlib>=3.1.3->sweetviz) (1.17.0)\n",
+            "Downloading sweetviz-2.3.1-py3-none-any.whl (15.1 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m15.1/15.1 MB\u001b[0m \u001b[31m101.8 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hInstalling collected packages: sweetviz\n",
+            "Successfully installed sweetviz-2.3.1\n"
+          ]
+        }
+      ],
+      "source": [
+        "# 아래 명령어로 설치해 주셔야지 사용할 수 있습니다.\n",
+        "!pip install sweetviz"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 14,
+      "metadata": {
+        "id": "jpNAsAL-JFiF",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 533,
+          "referenced_widgets": [
+            "fe44412142204a31adbae81fca7d2fd1",
+            "b9b5427b7cea4e23acde7d0d3f5b8303",
+            "18c70b3b268648d3909de23488d4446d",
+            "5fc3632a88ae4867950eadca56cff28d",
+            "a6738c08f1bf4bbea40c88b6db74ba6e",
+            "5dc6633139a54da0ac6c973f41582910",
+            "971c9525c488425e8c0d1f58ddec0bd9",
+            "ac28f8ec30414a39b3402a9186c71a8a",
+            "13a08d74218e45a08f4d2b782589a0e7",
+            "54655c88574548fe9afb1eb7ae929f98",
+            "2aa2255558404808befd088706a7ae6c"
+          ]
+        },
+        "outputId": "f0ccd3b9-33ec-4a01-a3e5-e0e296fb512f"
+      },
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "                                             |          | [  0%]   00:00 -> (? left)"
+            ],
+            "application/vnd.jupyter.widget-view+json": {
+              "version_major": 2,
+              "version_minor": 0,
+              "model_id": "fe44412142204a31adbae81fca7d2fd1"
+            }
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "error",
+          "ename": "AttributeError",
+          "evalue": "module 'numpy' has no attribute 'VisibleDeprecationWarning'",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mAttributeError\u001b[0m                            Traceback (most recent call last)",
+            "\u001b[0;32m/tmp/ipython-input-1295621496.py\u001b[0m in \u001b[0;36m<cell line: 0>\u001b[0;34m()\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0msweetviz\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0msv\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      2\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 3\u001b[0;31m \u001b[0mmy_report\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0msv\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0manalyze\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdf\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      4\u001b[0m \u001b[0;31m# 타겟변수 없이 그릴 수도 있고 타겟변수를 지정할 수도 있습니다.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[0;31m# 타겟변수는 범주형이 아닌 수치, bool 값만 가능합니다.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/sweetviz/sv_public.py\u001b[0m in \u001b[0;36manalyze\u001b[0;34m(source, target_feat, feat_cfg, pairwise_analysis)\u001b[0m\n\u001b[1;32m     10\u001b[0m             \u001b[0mfeat_cfg\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mFeatureConfig\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     11\u001b[0m             pairwise_analysis: str = 'auto'):\n\u001b[0;32m---> 12\u001b[0;31m     report = sweetviz.DataframeReport(source, target_feat, None,\n\u001b[0m\u001b[1;32m     13\u001b[0m                                       pairwise_analysis, feat_cfg)\n\u001b[1;32m     14\u001b[0m     \u001b[0;32mreturn\u001b[0m \u001b[0mreport\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/sweetviz/dataframe_report.py\u001b[0m in \u001b[0;36m__init__\u001b[0;34m(self, source, target_feature_name, compare, pairwise_analysis, fc, verbosity)\u001b[0m\n\u001b[1;32m    275\u001b[0m             \u001b[0;31m# start = time.perf_counter()\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    276\u001b[0m             \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mprogress_bar\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mset_description_str\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34mf\"Feature: {f.source.name}\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 277\u001b[0;31m             \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_features\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mf\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msource\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mname\u001b[0m\u001b[0;34m]\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0msa\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0manalyze_feature_to_dictionary\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mf\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    278\u001b[0m             \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mprogress_bar\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mupdate\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;36m1\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    279\u001b[0m             \u001b[0;31m# print(f\"DONE FEATURE------> {f.source.name}\"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/sweetviz/series_analyzer.py\u001b[0m in \u001b[0;36manalyze_feature_to_dictionary\u001b[0;34m(to_process)\u001b[0m\n\u001b[1;32m    140\u001b[0m     \u001b[0;31m# Perform full analysis on source/compare/target\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    141\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0mreturned_feature_dict\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m\"type\"\u001b[0m\u001b[0;34m]\u001b[0m \u001b[0;34m==\u001b[0m \u001b[0mFeatureType\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mTYPE_NUM\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 142\u001b[0;31m         \u001b[0msweetviz\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mseries_analyzer_numeric\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0manalyze\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mto_process\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mreturned_feature_dict\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    143\u001b[0m     \u001b[0;32melif\u001b[0m \u001b[0mreturned_feature_dict\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m\"type\"\u001b[0m\u001b[0;34m]\u001b[0m \u001b[0;34m==\u001b[0m \u001b[0mFeatureType\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mTYPE_CAT\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    144\u001b[0m         \u001b[0msweetviz\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mseries_analyzer_cat\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0manalyze\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mto_process\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mreturned_feature_dict\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/sweetviz/series_analyzer_numeric.py\u001b[0m in \u001b[0;36manalyze\u001b[0;34m(to_process, feature_dict)\u001b[0m\n\u001b[1;32m    100\u001b[0m     \u001b[0mdo_detail_numeric\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mto_process\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msource\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mto_process\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msource_counts\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mto_process\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mcompare_counts\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mfeature_dict\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    101\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 102\u001b[0;31m     \u001b[0mfeature_dict\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m\"minigraph\"\u001b[0m\u001b[0;34m]\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mGraphNumeric\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"mini\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mto_process\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    103\u001b[0m     \u001b[0mfeature_dict\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m\"detail_graphs\"\u001b[0m\u001b[0;34m]\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mlist\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    104\u001b[0m     \u001b[0;32mfor\u001b[0m \u001b[0mnum_bins\u001b[0m \u001b[0;32min\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;36m5\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;36m15\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;36m30\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/sweetviz/graph_numeric.py\u001b[0m in \u001b[0;36m__init__\u001b[0;34m(self, which_graph, to_process)\u001b[0m\n\u001b[1;32m     69\u001b[0m         \u001b[0mgap_percent\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mconfig\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m\"Graphs\"\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mgetfloat\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"summary_graph_categorical_gap\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     70\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 71\u001b[0;31m         \u001b[0mwarnings\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfilterwarnings\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'ignore'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcategory\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mnp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mVisibleDeprecationWarning\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     72\u001b[0m         self.hist_specs = axs.hist(plot_data, weights = normalizing_weights, bins=self.num_bins, \\\n\u001b[1;32m     73\u001b[0m                                    rwidth = (100.0 - gap_percent) / 100.0)\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/numpy/__init__.py\u001b[0m in \u001b[0;36m__getattr__\u001b[0;34m(attr)\u001b[0m\n\u001b[1;32m    408\u001b[0m             \u001b[0;32mreturn\u001b[0m \u001b[0mchar\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mchararray\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    409\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 410\u001b[0;31m         raise AttributeError(\"module {!r} has no attribute \"\n\u001b[0m\u001b[1;32m    411\u001b[0m                              \"{!r}\".format(__name__, attr))\n\u001b[1;32m    412\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mAttributeError\u001b[0m: module 'numpy' has no attribute 'VisibleDeprecationWarning'"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<Figure size 290x120 with 1 Axes>"
+            ],
+            "image/png": "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\n"
+          },
+          "metadata": {}
+        }
+      ],
+      "source": [
+        "import sweetviz as sv\n",
+        "\n",
+        "my_report = sv.analyze(df)\n",
+        "# 타겟변수 없이 그릴 수도 있고 타겟변수를 지정할 수도 있습니다.\n",
+        "# 타겟변수는 범주형이 아닌 수치, bool 값만 가능합니다.\n",
+        "# 데이터에 따라 수치형으로 되어있지만 동작하지 않을 수도 있습니다.\n",
+        "# my_report = sv.analyze(df, target_feat ='mpg')\n",
+        "my_report.show_html()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "KdzROrKEJFiF"
+      },
+      "outputs": [],
+      "source": []
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "LiT_4-4nJFiF"
+      },
+      "outputs": [],
+      "source": []
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "XYkgNsANJFiF"
+      },
+      "outputs": [],
+      "source": []
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "H4pmEiFmJFiF"
+      },
+      "outputs": [],
+      "source": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 662
+        },
+        "id": "452a261c",
+        "outputId": "ff95c2ef-db50-4eb9-cf70-7da339f2129c"
+      },
+      "source": [
+        "!pip install numpy==1.24.3"
+      ],
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Collecting numpy==1.24.3\n",
+            "  Downloading numpy-1.24.3.tar.gz (10.9 MB)\n",
+            "\u001b[?25l     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m0.0/10.9 MB\u001b[0m \u001b[31m?\u001b[0m eta \u001b[36m-:--:--\u001b[0m\r\u001b[2K     \u001b[91m━━━━━━━━━━━━━\u001b[0m\u001b[90m╺\u001b[0m\u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m3.6/10.9 MB\u001b[0m \u001b[31m102.5 MB/s\u001b[0m eta \u001b[36m0:00:01\u001b[0m\r\u001b[2K     \u001b[91m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[90m╺\u001b[0m\u001b[90m━━━━━━━━━━\u001b[0m \u001b[32m7.9/10.9 MB\u001b[0m \u001b[31m106.4 MB/s\u001b[0m eta \u001b[36m0:00:01\u001b[0m\r\u001b[2K     \u001b[91m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[91m╸\u001b[0m \u001b[32m10.9/10.9 MB\u001b[0m \u001b[31m104.0 MB/s\u001b[0m eta \u001b[36m0:00:01\u001b[0m\r\u001b[2K     \u001b[91m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[91m╸\u001b[0m \u001b[32m10.9/10.9 MB\u001b[0m \u001b[31m104.0 MB/s\u001b[0m eta \u001b[36m0:00:01\u001b[0m\r\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m10.9/10.9 MB\u001b[0m \u001b[31m70.4 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25h  Installing build dependencies ... \u001b[?25l\u001b[?25hdone\n",
+            "  \u001b[1;31merror\u001b[0m: \u001b[1msubprocess-exited-with-error\u001b[0m\n",
+            "  \n",
+            "  \u001b[31m×\u001b[0m \u001b[32mGetting requirements to build wheel\u001b[0m did not run successfully.\n",
+            "  \u001b[31m│\u001b[0m exit code: \u001b[1;36m1\u001b[0m\n",
+            "  \u001b[31m╰─>\u001b[0m See above for output.\n",
+            "  \n",
+            "  \u001b[1;35mnote\u001b[0m: This error originates from a subprocess, and is likely not a problem with pip.\n",
+            "  Getting requirements to build wheel ... \u001b[?25l\u001b[?25herror\n",
+            "\u001b[1;31merror\u001b[0m: \u001b[1msubprocess-exited-with-error\u001b[0m\n",
+            "\n",
+            "\u001b[31m×\u001b[0m \u001b[32mGetting requirements to build wheel\u001b[0m did not run successfully.\n",
+            "\u001b[31m│\u001b[0m exit code: \u001b[1;36m1\u001b[0m\n",
+            "\u001b[31m╰─>\u001b[0m See above for output.\n",
+            "\n",
+            "\u001b[1;35mnote\u001b[0m: This error originates from a subprocess, and is likely not a problem with pip.\n"
+          ]
+        },
+        {
+          "output_type": "error",
+          "ename": "KeyboardInterrupt",
+          "evalue": "",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mKeyboardInterrupt\u001b[0m                         Traceback (most recent call last)",
+            "\u001b[0;32m/tmp/ipython-input-3214855695.py\u001b[0m in \u001b[0;36m<cell line: 0>\u001b[0;34m()\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mget_ipython\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msystem\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'pip install numpy==1.24.3'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/google/colab/_shell.py\u001b[0m in \u001b[0;36msystem\u001b[0;34m(self, *args, **kwargs)\u001b[0m\n\u001b[1;32m    150\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    151\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0mpip_warn\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 152\u001b[0;31m       \u001b[0m_pip\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mprint_previous_import_warning\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0moutput\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    153\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    154\u001b[0m   \u001b[0;32mdef\u001b[0m \u001b[0m_send_error\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mexc_content\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/google/colab/_pip.py\u001b[0m in \u001b[0;36mprint_previous_import_warning\u001b[0;34m(output)\u001b[0m\n\u001b[1;32m     54\u001b[0m \u001b[0;32mdef\u001b[0m \u001b[0mprint_previous_import_warning\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0moutput\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     55\u001b[0m   \u001b[0;34m\"\"\"Prints a warning about previously imported packages.\"\"\"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 56\u001b[0;31m   \u001b[0mpackages\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0m_previously_imported_packages\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0moutput\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     57\u001b[0m   \u001b[0;32mif\u001b[0m \u001b[0mpackages\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     58\u001b[0m     \u001b[0;31m# display a list of packages using the colab-display-data mimetype, which\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/google/colab/_pip.py\u001b[0m in \u001b[0;36m_previously_imported_packages\u001b[0;34m(pip_output)\u001b[0m\n\u001b[1;32m     48\u001b[0m \u001b[0;32mdef\u001b[0m \u001b[0m_previously_imported_packages\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mpip_output\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     49\u001b[0m   \u001b[0;34m\"\"\"List all previously imported packages from a pip install.\"\"\"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 50\u001b[0;31m   \u001b[0minstalled\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mset\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0m_extract_toplevel_packages\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mpip_output\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     51\u001b[0m   \u001b[0;32mreturn\u001b[0m \u001b[0msorted\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0minstalled\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mintersection\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mset\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0msys\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mmodules\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     52\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/google/colab/_pip.py\u001b[0m in \u001b[0;36m_extract_toplevel_packages\u001b[0;34m(pip_output)\u001b[0m\n\u001b[1;32m     37\u001b[0m   \u001b[0;34m\"\"\"Extract the list of toplevel packages associated with a pip install.\"\"\"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     38\u001b[0m   \u001b[0mtoplevel\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mcollections\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdefaultdict\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mset\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 39\u001b[0;31m   \u001b[0;32mfor\u001b[0m \u001b[0mm\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mps\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mimportlib\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mmetadata\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpackages_distributions\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mitems\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     40\u001b[0m     \u001b[0;32mfor\u001b[0m \u001b[0mp\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mps\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     41\u001b[0m       \u001b[0mtoplevel\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mp\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0madd\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mm\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/lib/python3.12/importlib/metadata/__init__.py\u001b[0m in \u001b[0;36mpackages_distributions\u001b[0;34m()\u001b[0m\n\u001b[1;32m    945\u001b[0m     \u001b[0mpkg_to_dist\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mcollections\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdefaultdict\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mlist\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    946\u001b[0m     \u001b[0;32mfor\u001b[0m \u001b[0mdist\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mdistributions\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 947\u001b[0;31m         \u001b[0;32mfor\u001b[0m \u001b[0mpkg\u001b[0m \u001b[0;32min\u001b[0m \u001b[0m_top_level_declared\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdist\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0m_top_level_inferred\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdist\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    948\u001b[0m             \u001b[0mpkg_to_dist\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mpkg\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mappend\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdist\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mmetadata\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'Name'\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    949\u001b[0m     \u001b[0;32mreturn\u001b[0m \u001b[0mdict\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mpkg_to_dist\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/lib/python3.12/importlib/metadata/__init__.py\u001b[0m in \u001b[0;36m_top_level_inferred\u001b[0;34m(dist)\u001b[0m\n\u001b[1;32m    957\u001b[0m     opt_names = {\n\u001b[1;32m    958\u001b[0m         \u001b[0mf\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mparts\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0mlen\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mf\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mparts\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;34m>\u001b[0m \u001b[0;36m1\u001b[0m \u001b[0;32melse\u001b[0m \u001b[0minspect\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mgetmodulename\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mf\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 959\u001b[0;31m         \u001b[0;32mfor\u001b[0m \u001b[0mf\u001b[0m \u001b[0;32min\u001b[0m \u001b[0malways_iterable\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdist\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfiles\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    960\u001b[0m     }\n\u001b[1;32m    961\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/importlib_metadata/__init__.py\u001b[0m in \u001b[0;36mfiles\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m    602\u001b[0m             \u001b[0;32mreturn\u001b[0m \u001b[0mlist\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mfilter\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;32mlambda\u001b[0m \u001b[0mpath\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mpath\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mlocate\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mexists\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mpackage_paths\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    603\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 604\u001b[0;31m         return skip_missing_files(\n\u001b[0m\u001b[1;32m    605\u001b[0m             make_files(\n\u001b[1;32m    606\u001b[0m                 \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_read_files_distinfo\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/importlib_metadata/_functools.py\u001b[0m in \u001b[0;36mwrapper\u001b[0;34m(param, *args, **kwargs)\u001b[0m\n\u001b[1;32m    100\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0mwrapper\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mparam\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m*\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    101\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0mparam\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 102\u001b[0;31m             \u001b[0;32mreturn\u001b[0m \u001b[0mfunc\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mparam\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m*\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    103\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    104\u001b[0m     \u001b[0;32mreturn\u001b[0m \u001b[0mwrapper\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/importlib_metadata/__init__.py\u001b[0m in \u001b[0;36mskip_missing_files\u001b[0;34m(package_paths)\u001b[0m\n\u001b[1;32m    600\u001b[0m         \u001b[0;34m@\u001b[0m\u001b[0mpass_none\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    601\u001b[0m         \u001b[0;32mdef\u001b[0m \u001b[0mskip_missing_files\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mpackage_paths\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 602\u001b[0;31m             \u001b[0;32mreturn\u001b[0m \u001b[0mlist\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mfilter\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;32mlambda\u001b[0m \u001b[0mpath\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mpath\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mlocate\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mexists\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mpackage_paths\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    603\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    604\u001b[0m         return skip_missing_files(\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/importlib_metadata/__init__.py\u001b[0m in \u001b[0;36m<lambda>\u001b[0;34m(path)\u001b[0m\n\u001b[1;32m    600\u001b[0m         \u001b[0;34m@\u001b[0m\u001b[0mpass_none\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    601\u001b[0m         \u001b[0;32mdef\u001b[0m \u001b[0mskip_missing_files\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mpackage_paths\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 602\u001b[0;31m             \u001b[0;32mreturn\u001b[0m \u001b[0mlist\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mfilter\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;32mlambda\u001b[0m \u001b[0mpath\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mpath\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mlocate\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mexists\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mpackage_paths\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    603\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    604\u001b[0m         return skip_missing_files(\n",
+            "\u001b[0;32m/usr/lib/python3.12/pathlib.py\u001b[0m in \u001b[0;36mexists\u001b[0;34m(self, follow_symlinks)\u001b[0m\n\u001b[1;32m    850\u001b[0m     \u001b[0;31m# Convenience functions for querying the stat results\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    851\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 852\u001b[0;31m     \u001b[0;32mdef\u001b[0m \u001b[0mexists\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m*\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mfollow_symlinks\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;32mTrue\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    853\u001b[0m         \"\"\"\n\u001b[1;32m    854\u001b[0m         \u001b[0mWhether\u001b[0m \u001b[0mthis\u001b[0m \u001b[0mpath\u001b[0m \u001b[0mexists\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mKeyboardInterrupt\u001b[0m: "
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.7.6"
+    },
+    "toc": {
+      "base_numbering": 1,
+      "nav_menu": {},
+      "number_sections": true,
+      "sideBar": true,
+      "skip_h1_title": false,
+      "title_cell": "Table of Contents",
+      "title_sidebar": "Contents",
+      "toc_cell": false,
+      "toc_position": {
+        "height": "calc(100% - 180px)",
+        "left": "10px",
+        "top": "150px",
+        "width": "204.787px"
+      },
+      "toc_section_display": true,
+      "toc_window_display": true
+    },
+    "varInspector": {
+      "cols": {
+        "lenName": 16,
+        "lenType": 16,
+        "lenVar": 40
+      },
+      "kernels_config": {
+        "python": {
+          "delete_cmd_postfix": "",
+          "delete_cmd_prefix": "del ",
+          "library": "var_list.py",
+          "varRefreshCmd": "print(var_dic_list())"
+        },
+        "r": {
+          "delete_cmd_postfix": ") ",
+          "delete_cmd_prefix": "rm(",
+          "library": "var_list.r",
+          "varRefreshCmd": "cat(var_dic_list()) "
+        }
+      },
+      "types_to_exclude": [
+        "module",
+        "function",
+        "builtin_function_or_method",
+        "instance",
+        "_Feature"
+      ],
+      "window_display": false
+    },
+    "colab": {
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "widgets": {
+      "application/vnd.jupyter.widget-state+json": {
+        "fe44412142204a31adbae81fca7d2fd1": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "HBoxModel",
+          "model_module_version": "1.5.0",
+          "state": {
+            "_dom_classes": [],
+            "_model_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "_model_name": "HBoxModel",
+            "_view_count": null,
+            "_view_module": "@jupyter-widgets/controls",
+            "_view_module_version": "1.5.0",
+            "_view_name": "HBoxView",
+            "box_style": "",
+            "children": [
+              "IPY_MODEL_b9b5427b7cea4e23acde7d0d3f5b8303",
+              "IPY_MODEL_18c70b3b268648d3909de23488d4446d",
+              "IPY_MODEL_5fc3632a88ae4867950eadca56cff28d"
+            ],
+            "layout": "IPY_MODEL_a6738c08f1bf4bbea40c88b6db74ba6e"
+          }
+        },
+        "b9b5427b7cea4e23acde7d0d3f5b8303": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "HTMLModel",
+          "model_module_version": "1.5.0",
+          "state": {
+            "_dom_classes": [],
+            "_model_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "_model_name": "HTMLModel",
+            "_view_count": null,
+            "_view_module": "@jupyter-widgets/controls",
+            "_view_module_version": "1.5.0",
+            "_view_name": "HTMLView",
+            "description": "",
+            "description_tooltip": null,
+            "layout": "IPY_MODEL_5dc6633139a54da0ac6c973f41582910",
+            "placeholder": "​",
+            "style": "IPY_MODEL_971c9525c488425e8c0d1f58ddec0bd9",
+            "value": "Feature: mpg                                 "
+          }
+        },
+        "18c70b3b268648d3909de23488d4446d": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "FloatProgressModel",
+          "model_module_version": "1.5.0",
+          "state": {
+            "_dom_classes": [],
+            "_model_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "_model_name": "FloatProgressModel",
+            "_view_count": null,
+            "_view_module": "@jupyter-widgets/controls",
+            "_view_module_version": "1.5.0",
+            "_view_name": "ProgressView",
+            "bar_style": "",
+            "description": "",
+            "description_tooltip": null,
+            "layout": "IPY_MODEL_ac28f8ec30414a39b3402a9186c71a8a",
+            "max": 10,
+            "min": 0,
+            "orientation": "horizontal",
+            "style": "IPY_MODEL_13a08d74218e45a08f4d2b782589a0e7",
+            "value": 1
+          }
+        },
+        "5fc3632a88ae4867950eadca56cff28d": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "HTMLModel",
+          "model_module_version": "1.5.0",
+          "state": {
+            "_dom_classes": [],
+            "_model_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "_model_name": "HTMLModel",
+            "_view_count": null,
+            "_view_module": "@jupyter-widgets/controls",
+            "_view_module_version": "1.5.0",
+            "_view_name": "HTMLView",
+            "description": "",
+            "description_tooltip": null,
+            "layout": "IPY_MODEL_54655c88574548fe9afb1eb7ae929f98",
+            "placeholder": "​",
+            "style": "IPY_MODEL_2aa2255558404808befd088706a7ae6c",
+            "value": " [ 10%]   00:00 -&gt; (00:00 left)"
+          }
+        },
+        "a6738c08f1bf4bbea40c88b6db74ba6e": {
+          "model_module": "@jupyter-widgets/base",
+          "model_name": "LayoutModel",
+          "model_module_version": "1.2.0",
+          "state": {
+            "_model_module": "@jupyter-widgets/base",
+            "_model_module_version": "1.2.0",
+            "_model_name": "LayoutModel",
+            "_view_count": null,
+            "_view_module": "@jupyter-widgets/base",
+            "_view_module_version": "1.2.0",
+            "_view_name": "LayoutView",
+            "align_content": null,
+            "align_items": null,
+            "align_self": null,
+            "border": null,
+            "bottom": null,
+            "display": "inline-flex",
+            "flex": null,
+            "flex_flow": "row wrap",
+            "grid_area": null,
+            "grid_auto_columns": null,
+            "grid_auto_flow": null,
+            "grid_auto_rows": null,
+            "grid_column": null,
+            "grid_gap": null,
+            "grid_row": null,
+            "grid_template_areas": null,
+            "grid_template_columns": null,
+            "grid_template_rows": null,
+            "height": null,
+            "justify_content": null,
+            "justify_items": null,
+            "left": null,
+            "margin": null,
+            "max_height": null,
+            "max_width": null,
+            "min_height": null,
+            "min_width": null,
+            "object_fit": null,
+            "object_position": null,
+            "order": null,
+            "overflow": null,
+            "overflow_x": null,
+            "overflow_y": null,
+            "padding": null,
+            "right": null,
+            "top": null,
+            "visibility": null,
+            "width": "100%"
+          }
+        },
+        "5dc6633139a54da0ac6c973f41582910": {
+          "model_module": "@jupyter-widgets/base",
+          "model_name": "LayoutModel",
+          "model_module_version": "1.2.0",
+          "state": {
+            "_model_module": "@jupyter-widgets/base",
+            "_model_module_version": "1.2.0",
+            "_model_name": "LayoutModel",
+            "_view_count": null,
+            "_view_module": "@jupyter-widgets/base",
+            "_view_module_version": "1.2.0",
+            "_view_name": "LayoutView",
+            "align_content": null,
+            "align_items": null,
+            "align_self": null,
+            "border": null,
+            "bottom": null,
+            "display": null,
+            "flex": null,
+            "flex_flow": null,
+            "grid_area": null,
+            "grid_auto_columns": null,
+            "grid_auto_flow": null,
+            "grid_auto_rows": null,
+            "grid_column": null,
+            "grid_gap": null,
+            "grid_row": null,
+            "grid_template_areas": null,
+            "grid_template_columns": null,
+            "grid_template_rows": null,
+            "height": null,
+            "justify_content": null,
+            "justify_items": null,
+            "left": null,
+            "margin": null,
+            "max_height": null,
+            "max_width": null,
+            "min_height": null,
+            "min_width": null,
+            "object_fit": null,
+            "object_position": null,
+            "order": null,
+            "overflow": null,
+            "overflow_x": null,
+            "overflow_y": null,
+            "padding": null,
+            "right": null,
+            "top": null,
+            "visibility": null,
+            "width": null
+          }
+        },
+        "971c9525c488425e8c0d1f58ddec0bd9": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "DescriptionStyleModel",
+          "model_module_version": "1.5.0",
+          "state": {
+            "_model_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "_model_name": "DescriptionStyleModel",
+            "_view_count": null,
+            "_view_module": "@jupyter-widgets/base",
+            "_view_module_version": "1.2.0",
+            "_view_name": "StyleView",
+            "description_width": ""
+          }
+        },
+        "ac28f8ec30414a39b3402a9186c71a8a": {
+          "model_module": "@jupyter-widgets/base",
+          "model_name": "LayoutModel",
+          "model_module_version": "1.2.0",
+          "state": {
+            "_model_module": "@jupyter-widgets/base",
+            "_model_module_version": "1.2.0",
+            "_model_name": "LayoutModel",
+            "_view_count": null,
+            "_view_module": "@jupyter-widgets/base",
+            "_view_module_version": "1.2.0",
+            "_view_name": "LayoutView",
+            "align_content": null,
+            "align_items": null,
+            "align_self": null,
+            "border": null,
+            "bottom": null,
+            "display": null,
+            "flex": "2",
+            "flex_flow": null,
+            "grid_area": null,
+            "grid_auto_columns": null,
+            "grid_auto_flow": null,
+            "grid_auto_rows": null,
+            "grid_column": null,
+            "grid_gap": null,
+            "grid_row": null,
+            "grid_template_areas": null,
+            "grid_template_columns": null,
+            "grid_template_rows": null,
+            "height": null,
+            "justify_content": null,
+            "justify_items": null,
+            "left": null,
+            "margin": null,
+            "max_height": null,
+            "max_width": null,
+            "min_height": null,
+            "min_width": null,
+            "object_fit": null,
+            "object_position": null,
+            "order": null,
+            "overflow": null,
+            "overflow_x": null,
+            "overflow_y": null,
+            "padding": null,
+            "right": null,
+            "top": null,
+            "visibility": null,
+            "width": null
+          }
+        },
+        "13a08d74218e45a08f4d2b782589a0e7": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "ProgressStyleModel",
+          "model_module_version": "1.5.0",
+          "state": {
+            "_model_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "_model_name": "ProgressStyleModel",
+            "_view_count": null,
+            "_view_module": "@jupyter-widgets/base",
+            "_view_module_version": "1.2.0",
+            "_view_name": "StyleView",
+            "bar_color": null,
+            "description_width": ""
+          }
+        },
+        "54655c88574548fe9afb1eb7ae929f98": {
+          "model_module": "@jupyter-widgets/base",
+          "model_name": "LayoutModel",
+          "model_module_version": "1.2.0",
+          "state": {
+            "_model_module": "@jupyter-widgets/base",
+            "_model_module_version": "1.2.0",
+            "_model_name": "LayoutModel",
+            "_view_count": null,
+            "_view_module": "@jupyter-widgets/base",
+            "_view_module_version": "1.2.0",
+            "_view_name": "LayoutView",
+            "align_content": null,
+            "align_items": null,
+            "align_self": null,
+            "border": null,
+            "bottom": null,
+            "display": null,
+            "flex": null,
+            "flex_flow": null,
+            "grid_area": null,
+            "grid_auto_columns": null,
+            "grid_auto_flow": null,
+            "grid_auto_rows": null,
+            "grid_column": null,
+            "grid_gap": null,
+            "grid_row": null,
+            "grid_template_areas": null,
+            "grid_template_columns": null,
+            "grid_template_rows": null,
+            "height": null,
+            "justify_content": null,
+            "justify_items": null,
+            "left": null,
+            "margin": null,
+            "max_height": null,
+            "max_width": null,
+            "min_height": null,
+            "min_width": null,
+            "object_fit": null,
+            "object_position": null,
+            "order": null,
+            "overflow": null,
+            "overflow_x": null,
+            "overflow_y": null,
+            "padding": null,
+            "right": null,
+            "top": null,
+            "visibility": null,
+            "width": null
+          }
+        },
+        "2aa2255558404808befd088706a7ae6c": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "DescriptionStyleModel",
+          "model_module_version": "1.5.0",
+          "state": {
+            "_model_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "_model_name": "DescriptionStyleModel",
+            "_view_count": null,
+            "_view_module": "@jupyter-widgets/base",
+            "_view_module_version": "1.2.0",
+            "_view_name": "StyleView",
+            "description_width": ""
+          }
+        }
+      }
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
